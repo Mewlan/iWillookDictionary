@@ -61,6 +61,7 @@ typedef enum Language
 
 LANG CurrentLanguage;
 HOME *HomeViewPtr;
+DICT *dictionary;
 unsigned short L;
 unsigned short N;
 char DictName[32];
@@ -103,7 +104,7 @@ void homeViewModel()
 	fclose(homeViewfp);
 }
 
-DICT * dictionaryModel()
+void dictionaryModel()
 {
 	printf("dictionaryModel\n");
 	FILE *dictionaryfp;
@@ -118,8 +119,6 @@ DICT * dictionaryModel()
 		case uyghur:fseek(dictionaryfp, 2 * VOC * DICT_LEN, 0);break;
 		default:break;
 	}	
-	DICT *dictionary;
-	dictionary = (DICT*) calloc(VOC, DICT_LEN);
 	for (int i = 0; i < VOC; ++i)
 	{
 		if (fread(&dictionary[i], DICT_LEN, 1, dictionaryfp) != 1)
@@ -130,7 +129,6 @@ DICT * dictionaryModel()
 		printf("%s\n", dictionary[i].definition.latinDefinition);
 	}
 	fclose(dictionaryfp);
-	return(dictionary);
 }
 
 /******View******/
@@ -176,8 +174,10 @@ void searchView()
 {
 	printf("searchView\n");
 	printf("%s\n", HomeViewPtr->searchViewString);
-	DICT * dictionaryModel();
-	searchViewController(dictionaryModel());
+	dictionary = (DICT*) calloc(VOC, DICT_LEN);
+	dictionaryModel();
+	searchViewController();
+	free(dictionary);
 }
 
 void dataInsertInstructionView()
@@ -196,8 +196,11 @@ void catalogView()
 {
 	printf("catalogView\n");
 	printf("%s\n", HomeViewPtr->catalogViewString);
-	catalogViewController(dictionaryModel());
+	dictionary = (DICT*) calloc(VOC, DICT_LEN);
+	dictionaryModel();
+	catalogViewController();
 	backView();
+	free(dictionary);
 }
 
 void selectLanguageView()
@@ -338,33 +341,33 @@ void selectLanguageViewController()
 	}
 }
 
-void catalogViewController(DICT *dictionaryPtr)
+void catalogViewController()
 {
 	printf("catalogViewController\n");
 	for (int i = 0; i < VOC; ++i)
 	{
 		printf("%d. ", i + 1);	
-		printf("%s\n", *(dictionaryPtr + i)->vocabulary);	
+		printf("%s\n", *(dictionary + i)->vocabulary);	
 	}
 }
 
-void searchViewController(DICT *dictionaryPtr)
+void searchViewController()
 {
 	printf("searchViewController\n");
 	char aString[32];
 	scanf("%s", aString);
 	for (int i = 0; i < VOC; ++i)
 	{
-		if (strcmp(aString, *(dictionaryPtr + i)->vocabulary) == 0)
+		if (strcmp(aString, *(dictionary + i)->vocabulary) == 0)
 		{
 			switch (CurrentLanguage) {
 				case uyghur:
 				case english:
-					printf("%s\n", *(dictionaryPtr + i)->definition.latinDefinition);
+					printf("%s\n", *(dictionary + i)->definition.latinDefinition);
 					// printf("%u\n", *(dictionaryPtr + i)->yearofOrigin);
 				break;
 				case chinese:
-					printf("%s\n", *(dictionaryPtr + i)->definition.cnDefinition);
+					printf("%s\n", *(dictionary + i)->definition.cnDefinition);
 					// printf("%u\n", *(dictionaryPtr + i)->yearofOrigin);
 				break;
 				default:break;
