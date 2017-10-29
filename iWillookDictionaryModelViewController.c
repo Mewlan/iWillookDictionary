@@ -60,13 +60,14 @@ typedef enum Language
 } LANG;
 
 LANG CurrentLanguage;
+HOME *HomeViewPtr;
 unsigned short L;
 unsigned short N;
 char DictName[32];
 
 /******Model******/
 
-HOME * homeViewModel()
+void homeViewModel()
 {
 	printf("homeViewModel\n");
 	FILE *languagePreferencefp;
@@ -93,37 +94,13 @@ HOME * homeViewModel()
 		case uyghur:fseek(homeViewfp, 2 * HOME_LEN, 0);break;
 		default:break;
 	}
-	HOME homeView;
+	static HOME homeView;
 	if (fread(&homeView, HOME_LEN, 1, homeViewfp) != 1)
 	{
 		printf("homeView read error\n");
 	}
-	HOME *homeViewPtr;
-	homeViewPtr = &homeView;
-	printf(homeViewPtr->errorViewString);
-	putchar('\n');
-	printf(homeViewPtr->dataInsertInstructionViewString, '\n', '\n', '\n');
-	putchar('\n');
-	printf(homeViewPtr->dataUpdatedViewString, '\0');
-	putchar('\n');
-	printf(homeViewPtr->searchViewString);
-	putchar('\n');
-	printf(homeViewPtr->catalogViewString);
-	putchar('\n');
-	printf(homeViewPtr->backViewString);
-	putchar('\n');
-	printf(homeViewPtr->selectLanguageViewString, '\t', '\n', '\t', '\n', '\t');
-	putchar('\n');
-	printf(homeViewPtr->functionDataInsertString, '\t');
-	putchar('\n');
-	printf(homeViewPtr->functionSearchString, '\t');
-	putchar('\n');
-	printf(homeViewPtr->functionCatalogString, '\t');
-	putchar('\n');
-	printf(homeViewPtr->functionSelectLanguageString, '\t');
-	putchar('\n');
+	HomeViewPtr = &homeView;
 	fclose(homeViewfp);
-	return(homeViewPtr);
 }
 
 DICT * dictionaryModel()
@@ -149,6 +126,8 @@ DICT * dictionaryModel()
 		{
 			printf("dictionary read error\n");
 		}
+		printf("%s\n", dictionary[i].vocabulary);
+		printf("%s\n", dictionary[i].definition.latinDefinition);
 	}
 	fclose(dictionaryfp);
 	return(dictionary);
@@ -156,35 +135,35 @@ DICT * dictionaryModel()
 
 /******View******/
 
-void backView(HOME *homeViewPtr)
+void backView()
 {
 	printf("backView\n");
-	printf("%s\n", homeViewPtr->backViewString);
+	printf("%s\n", HomeViewPtr->backViewString);
 	char isBack;
 	scanf("%c", &isBack);
 	if (isBack == 'y')
 	{
-		loadHomeView(homeViewPtr);
+		loadHomeView();
 	} else if (isBack == 'n')
 	{
 		exit(0);
 	} else {
-		backViewErrorView(isBack, homeViewPtr);
+		backViewErrorView(isBack);
 	}
 }
 
-void backViewErrorView(char aChar, HOME *homeViewPtr)
+void backViewErrorView(char aChar)
 {
 	printf("backViewErrorView\n");
-	printf("\'%c\'\t%s\n", aChar, homeViewPtr->errorViewString);
-	backView(homeViewPtr);
+	printf("\'%c\'\t%s\n", aChar, HomeViewPtr->errorViewString);
+	backView();
 }
 
-void selectFunctionErrorView(char aString[12], HOME *homeViewPtr)
+void selectFunctionErrorView(char aString[12])
 {
 	printf("selectFunctionErrorView\n");
-	printf("\'%s\'\t%s\n", aString, homeViewPtr->errorViewString);
-	selectFunctionController(homeViewPtr);
+	printf("\'%s\'\t%s\n", aString, HomeViewPtr->errorViewString);
+	selectFunctionController();
 }
 
 void selectLanguageErrorView(char aString[16])
@@ -193,59 +172,59 @@ void selectLanguageErrorView(char aString[16])
 	printf("\'%s\'\tis not a command.\n", aString);
 }
 
-void searchView(HOME *homeViewPtr)
+void searchView()
 {
 	printf("searchView\n");
-	printf("%s\n", homeViewPtr->searchViewString);
+	printf("%s\n", HomeViewPtr->searchViewString);
 	DICT * dictionaryModel();
-	searchViewController(dictionaryModel(), homeViewPtr);
+	searchViewController(dictionaryModel());
 }
 
-void dataInsertInstructionView(HOME *homeViewPtr)
+void dataInsertInstructionView()
 {
 	printf("dataInsertInstructionView\n");
-	printf(homeViewPtr->dataInsertInstructionViewString, '\n', '\n', '\n');
+	printf(HomeViewPtr->dataInsertInstructionViewString, '\n', '\n', '\n');
 	putchar('\n');
 	DICT_LL * dataInsertController(DICT_LL *head, DICT_LL *ptr1, DICT_LL *ptr2);
 	DICT_LL *head, *ptr1, *ptr2;
 	ptr1 = ptr2 = (DICT_LL*) malloc(DICT_LL_LEN);	
 	dictModelUpdateViewController(dataInsertController(head, ptr1, ptr2));
-	backView(homeViewPtr);
+	backView();
 }
 
-void catalogView(HOME *homeViewPtr)
+void catalogView()
 {
 	printf("catalogView\n");
-	printf("%s\n", homeViewPtr->catalogViewString);
-	catalogViewController(dictionaryModel(), homeViewPtr);
-	backView(homeViewPtr);
+	printf("%s\n", HomeViewPtr->catalogViewString);
+	catalogViewController(dictionaryModel());
+	backView();
 }
 
-void selectLanguageView(HOME *homeViewPtr)
+void selectLanguageView()
 {
 	printf("selectLanguageView\n");
-	printf(homeViewPtr->selectLanguageViewString, '\t', '\n', '\t', '\n', '\t');
+	printf(HomeViewPtr->selectLanguageViewString, '\t', '\n', '\t', '\n', '\t');
 	putchar('\n');
 	selectLanguageViewController();
 }
 
-void loadHomeView(HOME *homeViewPtr)
+void loadHomeView()
 {
 	printf("loadHomeView\n");
-	printf(homeViewPtr->functionSearchString, '\t');
+	printf(HomeViewPtr->functionSearchString, '\t');
 	putchar('\n');
-	printf(homeViewPtr->functionCatalogString, '\t');
+	printf(HomeViewPtr->functionCatalogString, '\t');
 	putchar('\n');
-	printf(homeViewPtr->functionDataInsertString, '\t');
+	printf(HomeViewPtr->functionDataInsertString, '\t');
 	putchar('\n');
-	printf(homeViewPtr->functionSelectLanguageString, '\t');
+	printf(HomeViewPtr->functionSelectLanguageString, '\t');
 	putchar('\n');
-	selectFunctionController(homeViewPtr);
+	selectFunctionController();
 }
 
 /******Controller******/
 
-void selectFunctionController(HOME *homeViewPtr)
+void selectFunctionController()
 {
 	printf("selectFunctionController\n");
 	char aString[32];
@@ -254,52 +233,52 @@ void selectFunctionController(HOME *homeViewPtr)
 		case english:
 			if (strcmp(aString, "SEARCH") == 0)
 			{
-				searchView(homeViewPtr);
+				searchView();
 			} else if (strcmp(aString, "CATALOG") == 0)
 			{
-				catalogView(homeViewPtr);
+				catalogView();
 			} else if(strcmp(aString, "INSERT") == 0) 
 			{
-				dataInsertInstructionView(homeViewPtr);
+				dataInsertInstructionView();
 			} else if (strcmp(aString, "PREFERENCE" == 0))
 			{
-				selectLanguageView(homeViewPtr);
+				selectLanguageView();
 			} else {
-				selectFunctionErrorView(aString, homeViewPtr);
+				selectFunctionErrorView(aString);
 			};
 		break;
 		case chinese:
 			if (strcmp(aString, "搜索") == 0)
 			{
-				searchView(homeViewPtr);
+				searchView();
 			} else if (strcmp(aString, "目录") == 0)
 			{
-				catalogView(homeViewPtr);
+				catalogView();
 			} else if (strcmp(aString, "输入") == 0) 
 			{
-				dataInsertInstructionView(homeViewPtr);
+				dataInsertInstructionView();
 			} else if (strcmp(aString, "设置") == 0) 
 			{
-				selectLanguageView(homeViewPtr);
+				selectLanguageView();
 			} else {
-				selectFunctionErrorView(aString, homeViewPtr);
+				selectFunctionErrorView(aString);
 			};
 		break;
 		case uyghur:
 			if (strcmp(aString, "IZDE") == 0)
 			{
-				searchView(homeViewPtr);
+				searchView();
 			} else if (strcmp(aString, "MUNDERIJE") == 0)
 			{
-				catalogView(homeViewPtr);				
+				catalogView();				
 			} else if (strcmp(aString, "KIRGUZUSH") == 0) 
 			{
-				dataInsertInstructionView(homeViewPtr);	
+				dataInsertInstructionView();	
 			} else if (strcmp(aString, "TENGSHEK") == 0) 
 			{
-				selectLanguageView(homeViewPtr);
+				selectLanguageView();
 			} else {
-				selectFunctionErrorView(aString, homeViewPtr);
+				selectFunctionErrorView(aString);
 			};
 		break;
 		default:break;
@@ -359,7 +338,7 @@ void selectLanguageViewController()
 	}
 }
 
-void catalogViewController(DICT *dictionaryPtr, HOME *homeViewPtr)
+void catalogViewController(DICT *dictionaryPtr)
 {
 	printf("catalogViewController\n");
 	for (int i = 0; i < VOC; ++i)
@@ -369,7 +348,7 @@ void catalogViewController(DICT *dictionaryPtr, HOME *homeViewPtr)
 	}
 }
 
-void searchViewController(DICT *dictionaryPtr, HOME *homeViewPtr)
+void searchViewController(DICT *dictionaryPtr)
 {
 	printf("searchViewController\n");
 	char aString[32];
@@ -392,7 +371,7 @@ void searchViewController(DICT *dictionaryPtr, HOME *homeViewPtr)
 			}
 		}
 	}
-	backView(homeViewPtr);
+	backView();
 }
 
 DICT_LL * dataInsertController(DICT_LL *head, DICT_LL *ptr1, DICT_LL *ptr2)
@@ -506,9 +485,7 @@ void dictModelUpdateViewController(DICT_LL *head)
 
 int main(int argc, char const *argv[])
 {
-	HOME * homeViewModel();
-	void loadHomeView(HOME *homeViewPtr);
-	loadHomeView(homeViewModel());
-
+	homeViewModel();
+	loadHomeView();
 	return 0;
 }
