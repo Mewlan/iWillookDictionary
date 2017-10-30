@@ -1,0 +1,62 @@
+application
+a formal, usually written, request for something such as a job, place at university, or permission to do something
+framework
+a set of ideas, rules, or beliefs from which something is developed, or on which decisions are based
+architecture
+the style and design of a building or buildings
+firmware
+instructions to computers that are stored on chips rather than in programs
+immutable
+never changing or impossible to change
+GUI
+a way of showing and organizing information on a computer screen that is easy to use and understand
+manipulator
+someone who is skilful at getting what they want by cleverly controlling or deceiving other people
+pixel
+technical the smallest unit of an image on a computer screen
+retina
+the area at the back of your eye that receives light and sends an image of what you see to your brain
+wrapper
+the piece of paper or plastic that covers something when it is sold
+
+应用
+适用需要,以供使用
+框架
+提供形状或强度的结构系统(如屋架)
+建筑学
+研究设计与建造建筑物的一门学科。
+固件
+固件(Firmware)就是写入EROM 可擦写只读存储器或EEPROM(电可擦可编程只读存储器)中的程序。
+不可改变的
+就是不可改变的
+图形用户界面
+图形用户界面（Graphical User Interface，简称GUI，又称图形用户接口）是指采用图形方式显示的计算机操作用户界面。
+机械手
+能代替人手做某些动作的机械装置。种类很多，多数用于不适于人体直接操作的场合，如高温、接触放射性物质等。
+像素
+中文全称为图像元素。像素仅仅只是分辨率的尺寸单位，而不是画质。从定义上来看，像素是指基本原色素及其灰度的基本编码。
+视网膜
+衬于脊椎动物眼球内面大部分的感觉性膜,它接受晶体形成的像,是视觉的接受器,由视神经与脑相连
+包装
+把东西打捆成包或装入箱等容器的动作或过程
+
+qollanma detal
+qollinishchanliqqa ige sestima(yunshaq detal).
+ramka
+shekil we yaki mustehkemlikini temilleydighan qurulma sestima.
+arxiteka
+qurulush
+qoyma materiyal
+qoyma materiyalning nimiliki bilmeymen.
+uzgermeydighan
+uzgermeydighan digen shu uzgermeydighan.
+GUI
+resimlik halda kompiyoturni bashqurush.
+bashqurghuch
+bashqurghuch digen shu bashqurghuch.
+piksel
+teswir elementi
+tor perde
+kozning korush nerwisi
+orap qachilash
+orap qachilash degen shu orap qachilash.
