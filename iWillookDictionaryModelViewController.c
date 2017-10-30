@@ -118,7 +118,7 @@
 			case chinese:fseek(dictionaryfp, VOC * DICT_LEN, 0);break;
 			case uyghur:fseek(dictionaryfp, (3 * VOC) * DICT_LEN, 0);break;
 			default:break;
-		}	
+		}
 		for (int i = 0; i < VOC; ++i)
 		{
 			if (fread(&dictionary[i], DICT_LEN, 1, dictionaryfp) != 1)
@@ -186,7 +186,7 @@
 		putchar('\n');
 		DICT_LL * dataInsertController(DICT_LL *head, DICT_LL *ptr1, DICT_LL *ptr2);
 		DICT_LL *head, *ptr1, *ptr2;
-		ptr1 = ptr2 = (DICT_LL*) malloc(DICT_LL_LEN);	
+		ptr1 = ptr2 = (DICT_LL*) malloc(DICT_LL_LEN);
 		dictModelUpdateViewController(dataInsertController(head, ptr1, ptr2));
 		backView();
 	}
@@ -240,7 +240,7 @@
 				} else if (strcmp(aString, "CATALOG") == 0)
 				{
 					catalogView();
-				} else if(strcmp(aString, "INSERT") == 0) 
+				} else if(strcmp(aString, "INSERT") == 0)
 				{
 					dataInsertInstructionView();
 				} else if (strcmp(aString, "PREFERENCE") == 0)
@@ -257,10 +257,10 @@
 				} else if (strcmp(aString, "目录") == 0)
 				{
 					catalogView();
-				} else if (strcmp(aString, "输入") == 0) 
+				} else if (strcmp(aString, "输入") == 0)
 				{
 					dataInsertInstructionView();
-				} else if (strcmp(aString, "设置") == 0) 
+				} else if (strcmp(aString, "设置") == 0)
 				{
 					selectLanguageView();
 				} else {
@@ -273,11 +273,11 @@
 					searchView();
 				} else if (strcmp(aString, "MUNDERIJE") == 0)
 				{
-					catalogView();				
-				} else if (strcmp(aString, "KIRGUZUSH") == 0) 
+					catalogView();
+				} else if (strcmp(aString, "KIRGUZUSH") == 0)
 				{
-					dataInsertInstructionView();	
-				} else if (strcmp(aString, "TENGSHEK") == 0) 
+					dataInsertInstructionView();
+				} else if (strcmp(aString, "TENGSHEK") == 0)
 				{
 					selectLanguageView();
 				} else {
@@ -293,6 +293,7 @@
 		printf("log: selectLanguageViewController\n");
 		char aString[16];
 		scanf("%s", aString);
+		fflush(stdin);
 		if (strcmp(aString, "ENGLISH") == 0)
 		{
 			L = CurrentLanguage = english;
@@ -302,11 +303,13 @@
 				printf("can not open file.\n");
 				return;
 			}
-			if (fwrite(&L, sizeof(unsigned short), 1, fp) != 1)	
+			if (fwrite(&L, sizeof(unsigned short), 1, fp) != 1)
 			{
 				printf("file write error.\n");
 			}
-			fclose(fp);		
+			fclose(fp);
+			homeViewModel();
+			backView();
 		} else if (strcmp(aString, "CHINESE") == 0)
 		{
 			L = CurrentLanguage = chinese;
@@ -316,11 +319,13 @@
 				printf("can not open file.\n");
 				return;
 			}
-			if (fwrite(&L, sizeof(unsigned short), 1, fp) != 1)	
+			if (fwrite(&L, sizeof(unsigned short), 1, fp) != 1)
 			{
 				printf("file write error.\n");
 			}
-			fclose(fp);	
+			fclose(fp);
+			homeViewModel();
+			backView();
 		} else if (strcmp(aString, "UYGHUR") == 0)
 		{
 			L = CurrentLanguage = uyghur;
@@ -330,11 +335,13 @@
 				printf("can not open file.\n");
 				return;
 			}
-			if (fwrite(&L, sizeof(unsigned short), 1, fp) != 1)	
+			if (fwrite(&L, sizeof(unsigned short), 1, fp) != 1)
 			{
 				printf("file write error.\n");
 			}
-			fclose(fp);	
+			fclose(fp);
+			homeViewModel();
+			backView();
 		} else {
 			selectLanguageErrorView(aString);
 			selectLanguageViewController();
@@ -346,8 +353,8 @@
 		printf("log: catalogViewController\n");
 		for (int i = 0; i < VOC; ++i)
 		{
-			printf("%d. ", i + 1);	
-			printf("%s\n", *(dictionary + i)->vocabulary);	
+			printf("%d. ", i + 1);
+			printf("%s\n", dictionary[i].vocabulary);
 		}
 	}
 
@@ -405,7 +412,7 @@
 				fflush(stdin);
 			}
 			ptr2->next = NULL;
-			return(head);			
+			return(head);
 			break;
 			case chinese:
 			scanf("%[^\n]%*c%[^\n]%*c%d", ptr1->vocabulary, ptr1->definition.cnDefinition, &ptr1->yearofOrigin);
@@ -426,11 +433,11 @@
 				fflush(stdin);
 			}
 			ptr2->next = NULL;
-			return(head);		
+			return(head);
 			break;
 			default:break;
 		}
-		return 0;	
+		return 0;
 	}
 
 	void dictModelUpdateViewController(DICT_LL *head)
@@ -448,43 +455,43 @@
 			case uyghur:fseek(dictionaryfp, 2 * N * DICT_LEN, 0);break;
 			default:break;
 		}
-		DICT *dictionary;
-		dictionary = (DICT*) calloc(N, DICT_LEN);
+		DICT *aDictionary;
+		aDictionary = (DICT*) calloc(N, DICT_LEN);
 		DICT_LL *dictPtr = head;
-		for (int i = 0; dictPtr->yearofOrigin != 2017; ++i, dictPtr = dictPtr->next) 
+		for (int i = 0; i < N; ++i, dictPtr = dictPtr->next)
 		{
-			*(dictionary + i)->vocabulary = dictPtr->vocabulary;
+			*(aDictionary + i)->vocabulary = dictPtr->vocabulary;
 			switch (CurrentLanguage) {
 				case uyghur:
 				case english:
-					*(dictionary + i)->definition.latinDefinition = dictPtr->definition.latinDefinition;
+					*(aDictionary + i)->definition.latinDefinition = dictPtr->definition.latinDefinition;
 				break;
 				case chinese:
-					*(dictionary + i)->definition.cnDefinition = dictPtr->definition.cnDefinition;
+					*(aDictionary + i)->definition.cnDefinition = dictPtr->definition.cnDefinition;
 				break;
 				default:break;
 			}
 		}
 		for (int i = 0; i < N; ++i)
 		{
-			if (fwrite(&dictionary[i], DICT_LEN, 1, dictionaryfp) != 1)
+			if (fwrite(&aDictionary[i], DICT_LEN, 1, dictionaryfp) != 1)
 			{
 				printf("dictionary write error\n");
-			printf("%d. ", i + 1);	
+			printf("%d. ", i + 1);
 			switch (CurrentLanguage) {
 				case uyghur:
 				case english:
-				printf("%s\n%s\n%d\n", dictionary[i].vocabulary, dictionary[i].definition.latinDefinition, dictionary[i].yearofOrigin);	
+				printf("%s\n%s\n%d\n", aDictionary[i].vocabulary, aDictionary[i].definition.latinDefinition, aDictionary[i].yearofOrigin);
 				break;
 				case chinese:
-				printf("%s\n%s\n%d\n", dictionary[i].vocabulary, dictionary[i].definition.cnDefinition, dictionary[i].yearofOrigin);	
+				printf("%s\n%s\n%d\n", aDictionary[i].vocabulary, aDictionary[i].definition.cnDefinition, aDictionary[i].yearofOrigin);
 				break;
 				default:break;
-			}	
+			}
 			}
 		}
 		free(dictionary);
-		fclose(dictionaryfp);	
+		fclose(dictionaryfp);
 	}
 
 
