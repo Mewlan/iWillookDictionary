@@ -67,7 +67,7 @@
 		unsigned short N;
 		char DictName[32];
 
-		/******Model******/
+		/***Model***/
 
 		void homeViewModel()
 		{
@@ -131,7 +131,7 @@
 			fclose(dictionaryfp);
 		}
 
-		/******View******/
+		/***View***/
 
 		void backView()
 		{
@@ -224,7 +224,7 @@
 			selectFunctionController();
 		}
 
-		/******Controller******/
+		/***Controller***/
 
 		void selectFunctionController()
 		{
@@ -395,76 +395,77 @@
 			switch (CurrentLanguage) {
 				case uyghur:
 				case english:{
-					DICT_LL **hp;
-                    DICT_LL **p1, **p2;
+					DICT_LL *hp;
+                    DICT_LL *p1, *p2;
 					N = 0;
-					p1 = p2 = (DICT_LL**) malloc(sizeof(DICT_LL*));
-					scanf("%[^\n]%*c%[^\n]%*c%d", (*p1)->vocabulary, (*p1)->definition.latinDefinition, &(*p1)->yearofOrigin);
+					p1 = p2 = (DICT_LL*) malloc(sizeof(DICT_LL*));
+					scanf("%[^\n]%*c%[^\n]%*c%d", p1->vocabulary, p1->definition.latinDefinition, &p1->yearofOrigin);
 					fflush(stdin);
 					hp = NULL;
-					while ((*p1)->yearofOrigin != 2017) {
+					while (p1->yearofOrigin != 2017) {
 						++N;
 						if (N == 1)
 						{
 							hp = p1;
 						} else {
-							(*p2)->next = (*p1);
+							p2->next = p1;
 						}
 						p2 = p1;
 						p1 = (DICT_LL*) malloc(DICT_LL_LEN);
-						scanf("%[^\n]%*c%[^\n]%*c%d", (*p1)->vocabulary, (*p1)->definition.latinDefinition, &(*p1)->yearofOrigin);
+						scanf("%[^\n]%*c%[^\n]%*c%d", p1->vocabulary, p1->definition.latinDefinition, &p1->yearofOrigin);
 						fflush(stdin);
 					}
-					(*p2)->next = NULL;
+					p2->next = NULL;
 					return(hp);
 				}
 
 				break;
 				case chinese:
                 {
-					DICT_LL **hp;
-                    DICT_LL **p1, **p2;
+					DICT_LL *hp;
+                    DICT_LL *p1, *p2;
 					N = 0;
-					p1 = p2 = (DICT_LL**) malloc(sizeof(DICT_LL*));
-					scanf("%[^\n]%*c%[^\n]%*c%d", (*p1)->vocabulary, (*p1)->definition.cnDefinition, &(*p1)->yearofOrigin);
+					p1 = p2 = (DICT_LL*) malloc(DICT_LL_LEN);
+					scanf("%[^\n]%*c%[^\n]%*c%d", p1->vocabulary, p1->definition.cnDefinition, &p1->yearofOrigin);
 					// fflush(stdin);
-					(*hp) = NULL;
-					while ((*p1)->yearofOrigin != 2017) {
+					hp = NULL;
+					while (p1->yearofOrigin != 2017) {
 						fflush(stdin);
 						++N;
 						if (N == 1)
 						{
 							printf("log: N == 1\n");
-							(*hp) = (*p1);
-							printf("log: head = 0x%x \n", (*hp));
+							hp = p1;
+							printf("log: head = 0x%x \n", hp);
 						} else {
 							printf("log: N != 1\n");
-							(*p2)->next = (*p1);
-							printf("log: ptr2->next = 0x%x, ptr2 =  0x%x\n", (*p2)->next, (*p2));
+							p2->next = p1;
+							printf("log: ptr2->next = 0x%x, ptr2 =  0x%x\n", p2->next, p2);
 						}
 						if (N == 1)
 						{
 							printf("log: N == 1, after initialized.\n");
 						}
-						(*p2) = (*p1);
-						printf("log: ptr2 = 0x%x \n", (*p2));
-						(*p1) = (DICT_LL*) malloc(DICT_LL_LEN);
-						printf("log: ptr1 = 0x%x \n", (*p1));
-						scanf("%[^\n]%*c%[^\n]%*c%d", (*p1)->vocabulary, (*p1)->definition.cnDefinition, &(*p1)->yearofOrigin);
+						p2 = p1;
+						printf("log: ptr2 = 0x%x \n", p2);
+						p1 = (DICT_LL*) malloc(DICT_LL_LEN);
+						printf("log: ptr1 = 0x%x \n", p1);
+						scanf("%[^\n]%*c%[^\n]%*c%d", p1->vocabulary, p1->definition.cnDefinition, &p1->yearofOrigin);
 					}
-					(*p2)->next = NULL;
-					printf("log: ptr2 = %o, ptr2->next = %o\n", (*p2), (*p2)->next);
+					p2->next = NULL;
+					printf("log: ptr2 = 0x%x, ptr2->next = 0x%x\n", p2, p2->next);
 					int i = 0;
-					while ((*hp)->next != NULL) {
+					printf("log: hp = 0x%x, hp->next = 0x%x\n", hp, hp->next);
+					while (hp != NULL) {
 						++i;
 						if (i == 1)
 						{
 							printf("log: head = head.\n");
 						}
-						printf("%s\n%s\n%d\n", (*hp)->vocabulary, (*hp)->definition.cnDefinition, (*hp)->yearofOrigin);
-						(*hp) = (*hp)->next;
+						printf("%s\n%s\n%d\n", hp->vocabulary, hp->definition.cnDefinition, hp->yearofOrigin);
+						hp = hp->next;
 					} exit(0);
-					return(*hp);
+					return(hp);
                 }
 				break;
 				default:break;
@@ -504,7 +505,7 @@
 					break;
 					default:break;
 				}
-				printf("%s\n%s\n%d\n", dictPtr->vocabulary, dictPtr->definition.cnDefinition, dictPtr->yearofOrigin);
+				printf("llog: %s\nllog: %s\nllog: %d\n", dictPtr->vocabulary, dictPtr->definition.cnDefinition, dictPtr->yearofOrigin);
 				dictPtr = dictPtr->next;
 				++i;
 			}
