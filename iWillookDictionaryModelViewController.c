@@ -188,6 +188,7 @@
 			DICT_LL * dataInsertController();
 			aDictionary = (DICT*) calloc(N, DICT_LEN);
 			dictModelUpdateViewController(dataInsertController());
+			free(aDictionary);
 			backView();
 		}
 
@@ -198,8 +199,8 @@
 			dictionary = (DICT*) calloc(VOC, DICT_LEN);
 			dictionaryModel();
 			catalogViewController();
-			backView();
 			free(dictionary);
+			backView();
 		}
 
 		void selectLanguageView()
@@ -394,15 +395,17 @@
 			strcat(DictName, ".dat");
 			switch (CurrentLanguage) {
 				case uyghur:
-				case english:{
+				case english:
+                {
 					DICT_LL *hp;
                     DICT_LL *p1, *p2;
 					N = 0;
-					p1 = p2 = (DICT_LL*) malloc(sizeof(DICT_LL*));
+					p1 = p2 = (DICT_LL*) malloc(DICT_LL_LEN);
 					scanf("%[^\n]%*c%[^\n]%*c%d", p1->vocabulary, p1->definition.latinDefinition, &p1->yearofOrigin);
 					fflush(stdin);
 					hp = NULL;
 					while (p1->yearofOrigin != 2017) {
+						fflush(stdin);
 						++N;
 						if (N == 1)
 						{
@@ -417,8 +420,7 @@
 					}
 					p2->next = NULL;
 					return(hp);
-				}
-
+                }
 				break;
 				case chinese:
                 {
@@ -427,50 +429,28 @@
 					N = 0;
 					p1 = p2 = (DICT_LL*) malloc(DICT_LL_LEN);
 					scanf("%[^\n]%*c%[^\n]%*c%d", p1->vocabulary, p1->definition.cnDefinition, &p1->yearofOrigin);
-					// fflush(stdin);
+					fflush(stdin);
 					hp = NULL;
 					while (p1->yearofOrigin != 2017) {
 						fflush(stdin);
 						++N;
 						if (N == 1)
 						{
-							printf("log: N == 1\n");
 							hp = p1;
-							printf("log: head = 0x%x \n", hp);
 						} else {
-							printf("log: N != 1\n");
 							p2->next = p1;
-							printf("log: ptr2->next = 0x%x, ptr2 =  0x%x\n", p2->next, p2);
-						}
-						if (N == 1)
-						{
-							printf("log: N == 1, after initialized.\n");
 						}
 						p2 = p1;
-						printf("log: ptr2 = 0x%x \n", p2);
 						p1 = (DICT_LL*) malloc(DICT_LL_LEN);
-						printf("log: ptr1 = 0x%x \n", p1);
 						scanf("%[^\n]%*c%[^\n]%*c%d", p1->vocabulary, p1->definition.cnDefinition, &p1->yearofOrigin);
+						fflush(stdin);
 					}
 					p2->next = NULL;
-					printf("log: ptr2 = 0x%x, ptr2->next = 0x%x\n", p2, p2->next);
-					int i = 0;
-					printf("log: hp = 0x%x, hp->next = 0x%x\n", hp, hp->next);
-					while (hp != NULL) {
-						++i;
-						if (i == 1)
-						{
-							printf("log: head = head.\n");
-						}
-						printf("%s\n%s\n%d\n", hp->vocabulary, hp->definition.cnDefinition, hp->yearofOrigin);
-						hp = hp->next;
-					} exit(0);
 					return(hp);
                 }
 				break;
 				default:break;
 			}
-			printf("log: return 0.\n");
 			return 0;
 		}
 
@@ -492,7 +472,7 @@
 			DICT_LL *dictPtr = head;
 
 			int i = 0;
-			while (dictPtr->next != NULL) {
+			while (dictPtr != NULL) {
 				strcpy(aDictionary[i].vocabulary, dictPtr->vocabulary);
 				aDictionary[i].yearofOrigin = dictPtr->yearofOrigin;
 				switch (CurrentLanguage) {
@@ -505,10 +485,10 @@
 					break;
 					default:break;
 				}
-				printf("llog: %s\nllog: %s\nllog: %d\n", dictPtr->vocabulary, dictPtr->definition.cnDefinition, dictPtr->yearofOrigin);
 				dictPtr = dictPtr->next;
 				++i;
 			}
+			selectionSort(aDictionary, N);
 			for (int i = 0; i < N; ++i)
 			{
 				printf("log: dictModelUpdateViewController: fwrite\n");
@@ -516,20 +496,42 @@
 				{
 					printf("dictionary write error\n");
 				}
-				printf("%d. ", i + 1);
 				switch (CurrentLanguage) {
 					case uyghur:
 					case english:
-					printf("%s\n%s\n%d\n", aDictionary[i].vocabulary, aDictionary[i].definition.latinDefinition, aDictionary[i].yearofOrigin);
+					printf("%d. %s\n\t%s\n\t%d\n", i + 1, aDictionary[i].vocabulary, aDictionary[i].definition.latinDefinition, aDictionary[i].yearofOrigin);
 					break;
 					case chinese:
-					printf("%s\n%s\n%d\n", aDictionary[i].vocabulary, aDictionary[i].definition.cnDefinition, aDictionary[i].yearofOrigin);
+					printf("%d. %s\n\t%s\n\t%d\n", i + 1, aDictionary[i].vocabulary, aDictionary[i].definition.cnDefinition, aDictionary[i].yearofOrigin);
 					break;
 					default:break;
 				}
 			}
-			free(dictionary);
 			fclose(dictionaryfp);
+		}
+
+		void selectionSort(DICT *aDict, unsigned short n)
+		{
+			printf("log: selectionSort()\n");
+			int min;
+			for (int i = 0; i < n - 1; ++i)
+			{
+				min = i;
+				for (int j = i + 1; j < n; ++j)
+				{
+					if (strcmp(aDict[min].vocabulary, aDict[j].vocabulary) > 0)
+					{
+						min = j;
+					}
+				}
+				if (min != i)
+				{
+
+					DICT temp = aDict[min];
+					aDict[min] = aDict[i];
+					aDict[i] = temp;
+				}
+			}
 		}
 
 

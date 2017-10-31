@@ -488,6 +488,7 @@
 				dictPtr = dictPtr->next;
 				++i;
 			}
+			selectionSort(aDictionary, N);
 			for (int i = 0; i < N; ++i)
 			{
 				printf("log: dictModelUpdateViewController: fwrite\n");
@@ -498,15 +499,44 @@
 				switch (CurrentLanguage) {
 					case uyghur:
 					case english:
-					printf("%s\n%s\n%d\n", aDictionary[i].vocabulary, aDictionary[i].definition.latinDefinition, aDictionary[i].yearofOrigin);
+					printf("%d. %s\n\t%s\n\t%d\n", i + 1, aDictionary[i].vocabulary, aDictionary[i].definition.latinDefinition, aDictionary[i].yearofOrigin);
 					break;
 					case chinese:
-					printf("%s\n%s\n%d\n", aDictionary[i].vocabulary, aDictionary[i].definition.cnDefinition, aDictionary[i].yearofOrigin);
+					printf("%d. %s\n\t%s\n\t%d\n", i + 1, aDictionary[i].vocabulary, aDictionary[i].definition.cnDefinition, aDictionary[i].yearofOrigin);
 					break;
 					default:break;
 				}
 			}
 			fclose(dictionaryfp);
+		}
+
+		void selectionSort(DICT *aDict, unsigned short n)
+		{
+			printf("log: selectionSort()\n");
+			int min;
+			for (int i = 0; i < n - 1; ++i)
+			{
+				min = i;
+				for (int j = i + 1; j < n; ++j)
+				{
+					if (strcmp(aDict[min].vocabulary, aDict[j].vocabulary) > 0)
+					{
+						min = j;
+					}
+				}
+				if (min != i)
+				{
+
+					DICT temp = aDict[min];
+					aDict[min] = aDict[i];
+					aDict[i] = temp;
+				}
+			}
+			for (int i = 0; i < n; ++i)
+			{
+				printf("%d. %s\n\t%s\n\t%d\n", i + 1, aDict[i].vocabulary, aDict[i].definition.cnDefinition, aDict[i].yearofOrigin);
+			}
+
 		}
 
 
