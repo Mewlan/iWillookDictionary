@@ -3,7 +3,7 @@
 		//  iWillookDictionary
 		//
 		//  Created by Mewlan Musajan on 10/25/17.
-		//	Copyleft (ɔ) 2017 Mewlan Musajan. All Wrongs reserved.
+		//	Copyleft ( ) 2017 Mewlan Musajan. All Wrongs reserved.
 		//
 
 		#include <stdio.h>
@@ -17,10 +17,10 @@
 
 		typedef struct DictionaryLL
 		{
-			char vocabulary[20];
+			char vocabulary[32];
 			union {
-				char latinDefinition[256];
-				char cnDefinition[280];
+				char latinDefinition[320];
+				char cnDefinition[356];
 			} definition;
 			int yearofOrigin;
 			struct DictionaryLL *next;
@@ -28,10 +28,10 @@
 
 		typedef struct Dictionary
 		{
-			char vocabulary[20];
+			char vocabulary[32];
 			union {
-				char latinDefinition[256];
-				char cnDefinition[280];
+				char latinDefinition[320];
+				char cnDefinition[356];
 			} definition;
 			int yearofOrigin;
 		} DICT;

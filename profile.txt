@@ -1,62 +1,91 @@
+iWillookDictionary
 application
-a formal, usually written, request for something such as a job, place at university, or permission to do something
+zh: 应用; ug: qollanma detal; en: a formal, usually written, request for something such as a job, place at university, or permission to do something
+1400
 framework
-a set of ideas, rules, or beliefs from which something is developed, or on which decisions are based
+zh: 框架; ug: ramka; en: a set of ideas, rules, or beliefs from which something is developed, or on which decisions are based.
+666
 architecture
-the style and design of a building or buildings
+zh: 结构; ug: arxiteka; en: the style and design of a building or buildings.
+666
 firmware
-instructions to computers that are stored on chips rather than in programs
+zh: 固件; ug: qoyma materiyal; en: instructions to computers that are stored on chips rather than in programs.
+666
 immutable
-never changing or impossible to change
-GUI
-a way of showing and organizing information on a computer screen that is easy to use and understand
+zh: 不可改变的; ug: uzgermeydighan; en: never changing or impossible to change.
+1300
+gui
+zh: 图形用户界面; ug: gui; en: a way of showing and organizing information on a computer screen that is easy to use and understand.
+2000
 manipulator
-someone who is skilful at getting what they want by cleverly controlling or deceiving other people
+zh: 机械手; ug: bashqurghuch; en: someone who is skilful at getting what they want by cleverly controlling or deceiving other people.
+1800
 pixel
-technical the smallest unit of an image on a computer screen
+zh: 像素; ug: piksel; en: technical the smallest unit of an image on a computer screen.
+2000
 retina
-the area at the back of your eye that receives light and sends an image of what you see to your brain
+zh: 视网膜; ug: tor perde; en: the area at the back of your eye that receives light and sends an image of what you see to your brain.
+1400
 wrapper
-the piece of paper or plastic that covers something when it is sold
-
+zh: 包装; ug: orap qachilash; en: the piece of paper or plastic that covers something when it is sold.
+666
 应用
-适用需要,以供使用
+en: application; ug: qollanma detal; zh: 适用需要,以供使用。
+666
 框架
-提供形状或强度的结构系统(如屋架)
-建筑学
-研究设计与建造建筑物的一门学科。
+en: framework; ug: ramka; zh: 提供形状或强度的结构系统(如屋架).
+666
+结构
+en: architecture; ug: arxiteka; zh: 组成整体的各部分的搭配和安排.
+666
 固件
-固件(Firmware)就是写入EROM 可擦写只读存储器或EEPROM(电可擦可编程只读存储器)中的程序。
+en: firmware; ug: qoyma materiyal; zh: 固件(Firmware)就是写入EROM 可擦写只读 存储器或EEPROM(电可擦可编程只读存储器)中的程序。
+666
 不可改变的
-就是不可改变的
-图形用户界面
-图形用户界面（Graphical User Interface，简称GUI，又称图形用户接口）是指采用图形方式显示的计算机操作用户界面。
+en: immutable; ug: uzgermeydighan; zh: 就是不可改变的.
+666
+gui
+en: gui; ug: gui; zh: 图形用户界面（Graphical User Interface，简称GUI，又称图形用户接口）是指采用图形方式显示的计算机操作用户界面。
+666
 机械手
-能代替人手做某些动作的机械装置。种类很多，多数用于不适于人体直接操作的场合，如高温、接触放射性物质等。
+en: manipulator; ug: bashqurghuch; zh: 能代替人手做某些动作的机械装置。种类很多，多数用于不适于人体直接操作的场合，如高温、接触放射性物质等。
+666
 像素
-中文全称为图像元素。像素仅仅只是分辨率的尺寸单位，而不是画质。从定义上来看，像素是指基本原色素及其灰度的基本编码。
+en: pixel; ug: piksel; zh: 中文全称为图像元素。像素仅仅只是分辨率的尺寸单位，而不是画质。从定义上来看，像素是指基本原色素及其灰度的基本编码。
+666
 视网膜
-衬于脊椎动物眼球内面大部分的感觉性膜,它接受晶体形成的像,是视觉的接受器,由视神经与脑相连
+en: retina; ug: tor perde; zh: 衬于脊椎动物眼球内面大部分的感觉性膜,它接受晶 体形成的像,是视觉的接受器,由视神经与脑相连.
+666
 包装
-把东西打捆成包或装入箱等容器的动作或过程
-
+en: wrapper; ug: orap qachilash; zh: 把东西打捆成包或装入箱等容器的动作或过程.
+666
 qollanma detal
-qollinishchanliqqa ige sestima(yunshaq detal).
+en: application; zh: 应用; ug: qollinishchanliqqa ige sestima(yunshaq detal).
+666
 ramka
-shekil we yaki mustehkemlikini temilleydighan qurulma sestima.
+en: framework; zh: 框架; ug: shekil we yaki mustehkemlikini temilleydighan qurulma sestima.
+666
 arxiteka
-qurulush
+en: architecture; zh: 结构; ug: qurulush.
+666
 qoyma materiyal
-qoyma materiyalning nimiliki bilmeymen.
+en: firmware; zh: 固件; ug: qoyma materiyalning nimiliki bilmeymen.
+666
 uzgermeydighan
-uzgermeydighan digen shu uzgermeydighan.
-GUI
-resimlik halda kompiyoturni bashqurush.
+en: immutable; zh: 不可改变的; ug: uzgermeydighan.
+666
+gui
+en: gui; zh: gui; ug: resimlik halda kompiyoturni bashqurush.
+666
 bashqurghuch
-bashqurghuch digen shu bashqurghuch.
+en: manipulator; zh: 机械手; ug: bashqurghuch.
+666
 piksel
-teswir elementi
+en: pixel; zh: 像素; ug: teswir elementi.
+666
 tor perde
-kozning korush nerwisi
+en: retina; zh: 视网膜; ug: kozning korush nerwisi.
+666
 orap qachilash
-orap qachilash degen shu orap qachilash.
+en: wrapper; zh: 包装; ug: orap qachilash.
+666
