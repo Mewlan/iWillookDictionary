@@ -139,6 +139,7 @@
 			printf("%s\n", HomeViewPtr->backViewString);
 			char isBack;
 			isBack = getchar();
+			fflush(stdin);
 			if (isBack == 'y')
 			{
 				loadHomeView();
@@ -147,6 +148,26 @@
 				exit(0);
 			} else {
 				backViewErrorView(isBack);
+			}
+		}
+
+		void searchViewbackView()
+		{
+			printf("log: searchViewbackView\n");
+			printf("%s\n", HomeViewPtr->backViewString);
+			char isBack;
+			isBack = getchar();
+			fflush(stdin);
+			if (isBack == 'y')
+			{
+				loadHomeView();
+			} else if (isBack == 'n')
+			{
+				searchViewController();
+			} else {
+				printf("log: searchViewErrorView:backViewErrorView\n");
+				printf("\'%c\'\t%s\n", isBack, HomeViewPtr->errorViewString);
+				searchViewbackView();
 			}
 		}
 
@@ -168,6 +189,24 @@
 		{
 			printf("log: selectLanguageErrorView\n");
 			printf("\'%s\'\tis not a command.\n", aString);
+		}
+
+		void searchViewErrorView(char aString[32])
+		{
+			printf("log: searchViewErrorView\n");
+			switch (CurrentLanguage) {
+				case english:
+					printf("The word \"%s\" does not exist. You can ask for it to be created by sending email to iliq@me.com :)\nor create a dictionary on your own by using INSERT function, please use instruction provided in README.md\n", aString);
+				break;
+				case chinese:
+					printf("单词 \"%s\" 不存在。 您可以向 iliq@me.com 发送电子邮件请求录入 :)\n或者您也可以自行使用输入函数录入，请阅读 README.md 里提供的操作指示。\n", aString);
+				break;
+				case uyghur:
+					printf("Sozluk \"%s\" mewjut emesken. iliq@me.com gha ilixet ewetish arqiliq uning qetilishini telep qilsingiz bolidu :)\nwe yaki ozingiz KIRGUZUSH funkisiyesini ishlitish arqiliq kirguzsingiz-mu bolidu, README.md diki meshxulat qilish korsetmisini oqung.\n", aString);
+				break;
+				default:break;
+			}
+			searchViewbackView();
 		}
 
 		void searchView()
@@ -233,6 +272,7 @@
 			char aString[32];
 			scanf("%s", aString);
 			fflush(stdin);
+			strupr(aString);
 			switch (CurrentLanguage) {
 				case english:
 					if (strcmp(aString, "SEARCH") == 0)
@@ -295,6 +335,7 @@
 			char aString[16];
 			scanf("%s", aString);
 			fflush(stdin);
+			strupr(aString);
 			if (strcmp(aString, "ENGLISH") == 0)
 			{
 				L = CurrentLanguage = english;
@@ -310,6 +351,7 @@
 				}
 				fclose(fp);
 				homeViewModel();
+				system("cls");
 				backView();
 			} else if (strcmp(aString, "CHINESE") == 0)
 			{
@@ -326,6 +368,7 @@
 				}
 				fclose(fp);
 				homeViewModel();
+				system("cls");
 				backView();
 			} else if (strcmp(aString, "UYGHUR") == 0)
 			{
@@ -342,6 +385,7 @@
 				}
 				fclose(fp);
 				homeViewModel();
+				system("cls");
 				backView();
 			} else {
 				selectLanguageErrorView(aString);
@@ -362,9 +406,11 @@
 		void searchViewController()
 		{
 			printf("log: searchViewController\n");
+			unsigned short flag = 0;
 			char aString[32];
-			scanf("%s", aString);
+			scanf("%[^\n]%*c", aString);
 			fflush(stdin);
+			strlwr(aString);
 			for (int i = 0; i < VOC; ++i)
 			{
 				if (strcmp(aString, dictionary[i].vocabulary) == 0)
@@ -373,18 +419,26 @@
 						case english:
 						case uyghur:
 							printf("log: searchViewController:definition\n");
-							printf("%s\n", dictionary[i].definition.latinDefinition);
-							// printf("%d\n", *(dictionaryPtr + i)->yearofOrigin);
+							printf("\t%s\n", dictionary[i].definition.latinDefinition);
+							printf("\t%d\n", dictionary[i].yearofOrigin);
+							flag = 1;
 						break;
 						case chinese:
-							printf("%s\n", dictionary[i].definition.cnDefinition);
-							// printf("%d\n", *(dictionaryPtr + i)->yearofOrigin);
+							printf("\t%s\n", dictionary[i].definition.cnDefinition);
+							printf("\t%d\n", dictionary[i].yearofOrigin);
+							flag = 1;
 						break;
 						default:break;
 					}
 				}
 			}
-			backView();
+			if (flag)
+			{
+				backView();
+			} else {
+				searchViewErrorView(aString);
+			}
+
 		}
 
 		DICT_LL * dataInsertController()
@@ -532,11 +586,6 @@
 					aDict[i] = temp;
 				}
 			}
-			for (int i = 0; i < n; ++i)
-			{
-				printf("%d. %s\n\t%s\n\t%d\n", i + 1, aDict[i].vocabulary, aDict[i].definition.cnDefinition, aDict[i].yearofOrigin);
-			}
-
 		}
 
 

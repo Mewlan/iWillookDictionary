@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1509445399 source:c:\users\administrator\documents\developer\iwillookdictionary\main.c
+1509455630 source:c:\users\administrator\documents\developer\iwillookdictionary\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
