@@ -3,7 +3,7 @@
 		//  iWillookDictionary
 		//
 		//  Created by Mewlan Musajan on 10/25/17.
-		//  Copyright (c) 2017 Mewlan Musajan. All rights reserved.
+		//	Copyleft ( ) 2017 Mewlan Musajan. All Wrongs reserved.
 		//
 
 		#include <stdio.h>
@@ -71,7 +71,7 @@
 
 		void homeViewModel()
 		{
-			printf("log: homeViewModel\n");
+			// printf("log: homeViewModel\n");
 			FILE *languagePreferencefp;
 			if ((languagePreferencefp = fopen("preference.dat", "rb")) == NULL)
 			{
@@ -107,7 +107,7 @@
 
 		void dictionaryModel()
 		{
-			printf("log: dictionaryModel\n");
+			// printf("log: dictionaryModel\n");
 			FILE *dictionaryfp;
 			if ((dictionaryfp = fopen("iWillookDictionary.dat", "rb")) == NULL)
 			{
@@ -126,7 +126,7 @@
 				{
 					printf("dictionary read error\n");
 				}
-				printf("%s\n", dictionary[i].vocabulary);
+				// printf("%s\n", dictionary[i].vocabulary);
 			}
 			fclose(dictionaryfp);
 		}
@@ -135,7 +135,7 @@
 
 		void backView()
 		{
-			printf("log: backView\n");
+			// printf("log: backView\n");
 			printf("%s\n", HomeViewPtr->backViewString);
 			char isBack;
 			isBack = getchar();
@@ -153,7 +153,7 @@
 
 		void searchViewbackView()
 		{
-			printf("log: searchViewbackView\n");
+			// printf("log: searchViewbackView\n");
 			printf("%s\n", HomeViewPtr->backViewString);
 			char isBack;
 			isBack = getchar();
@@ -165,7 +165,7 @@
 			{
 				searchViewController();
 			} else {
-				printf("log: searchViewErrorView:backViewErrorView\n");
+				// printf("log: searchViewErrorView:backViewErrorView\n");
 				printf("\'%c\'\t%s\n", isBack, HomeViewPtr->errorViewString);
 				searchViewbackView();
 			}
@@ -173,27 +173,27 @@
 
 		void backViewErrorView(char aChar)
 		{
-			printf("log: backViewErrorView\n");
+			// printf("log: backViewErrorView\n");
 			printf("\'%c\'\t%s\n", aChar, HomeViewPtr->errorViewString);
 			backView();
 		}
 
 		void selectFunctionErrorView(char aString[12])
 		{
-			printf("log: selectFunctionErrorView\n");
+			// printf("log: selectFunctionErrorView\n");
 			printf("\'%s\'\t%s\n", aString, HomeViewPtr->errorViewString);
 			selectFunctionController();
 		}
 
 		void selectLanguageErrorView(char aString[16])
 		{
-			printf("log: selectLanguageErrorView\n");
+			// printf("log: selectLanguageErrorView\n");
 			printf("\'%s\'\tis not a command.\n", aString);
 		}
 
 		void searchViewErrorView(char aString[32])
 		{
-			printf("log: searchViewErrorView\n");
+			// printf("log: searchViewErrorView\n");
 			switch (CurrentLanguage) {
 				case english:
 					printf("The word \"%s\" does not exist. You can ask for it to be created by sending email to iliq@me.com :)\nor create a dictionary on your own by using INSERT function, please use instruction provided in README.md\n", aString);
@@ -211,7 +211,7 @@
 
 		void searchView()
 		{
-			printf("log: searchView\n");
+			// printf("log: searchView\n");
 			printf("%s\n", HomeViewPtr->searchViewString);
 			dictionary = (DICT*) calloc(VOC, DICT_LEN);
 			dictionaryModel();
@@ -221,7 +221,7 @@
 
 		void dataInsertInstructionView()
 		{
-			printf("log: dataInsertInstructionView\n");
+			// printf("log: dataInsertInstructionView\n");
 			printf(HomeViewPtr->dataInsertInstructionViewString, '\n', '\n', '\n');
 			putchar('\n');
 			DICT_LL * dataInsertController();
@@ -233,7 +233,7 @@
 
 		void catalogView()
 		{
-			printf("log: catalogView\n");
+			// printf("log: catalogView\n");
 			printf("%s\n", HomeViewPtr->catalogViewString);
 			dictionary = (DICT*) calloc(VOC, DICT_LEN);
 			dictionaryModel();
@@ -244,7 +244,7 @@
 
 		void selectLanguageView()
 		{
-			printf("log: selectLanguageView\n");
+			// printf("log: selectLanguageView\n");
 			printf(HomeViewPtr->selectLanguageViewString, '\t', '\n', '\t', '\n', '\t');
 			putchar('\n');
 			selectLanguageViewController();
@@ -252,7 +252,20 @@
 
 		void loadHomeView()
 		{
-			printf("log: loadHomeView\n");
+			// printf("log: loadHomeView\n");
+			switch (CurrentLanguage)
+			{
+				case english:
+					printf("iWillook Dictionary [Version 1.0]\nCopyleft 2017 iWillook Inc. All Wrongs reserved.\n\n");
+				break;
+				case chinese:
+					printf("iWillook 字典 [版本 1.0]\nCopyleft 2017 iWillook 公司。 放弃所有权利。\n\n");
+				break;
+				case uyghur:
+					printf("iWillook Lughet [1.0 Neshir]\nCopyleft 2017 iWillook Shirkiti. Hemme hoqoqtin waskichidu.\n\n");
+				break;
+				default:break;
+			}
 			printf(HomeViewPtr->functionSearchString, '\t');
 			putchar('\n');
 			printf(HomeViewPtr->functionCatalogString, '\t');
@@ -268,7 +281,7 @@
 
 		void selectFunctionController()
 		{
-			printf("log: selectFunctionController\n");
+			// printf("log: selectFunctionController\n");
 			char aString[32];
 			scanf("%s", aString);
 			fflush(stdin);
@@ -331,7 +344,7 @@
 
 		void selectLanguageViewController()
 		{
-			printf("log: selectLanguageViewController\n");
+			// printf("log: selectLanguageViewController\n");
 			char aString[16];
 			scanf("%s", aString);
 			fflush(stdin);
@@ -395,7 +408,7 @@
 
 		void catalogViewController()
 		{
-			printf("log: catalogViewController\n");
+			// printf("log: catalogViewController\n");
 			for (int i = 0; i < VOC; ++i)
 			{
 				printf("%d. ", i + 1);
@@ -405,7 +418,7 @@
 
 		void searchViewController()
 		{
-			printf("log: searchViewController\n");
+			// printf("log: searchViewController\n");
 			unsigned short flag = 0;
 			char aString[32];
 			scanf("%[^\n]%*c", aString);
@@ -418,7 +431,7 @@
 					switch (CurrentLanguage) {
 						case english:
 						case uyghur:
-							printf("log: searchViewController:definition\n");
+							// printf("log: searchViewController:definition\n");
 							printf("\t%s\n", dictionary[i].definition.latinDefinition);
 							printf("\t%d\n", dictionary[i].yearofOrigin);
 							flag = 1;
@@ -443,7 +456,7 @@
 
 		DICT_LL * dataInsertController()
 		{
-			printf("log: dataInsertController\n");
+			// printf("log: dataInsertController\n");
 			scanf("%s", DictName);
 			fflush(stdin);
 			strcat(DictName, ".dat");
@@ -510,7 +523,7 @@
 
 		void dictModelUpdateViewController(DICT_LL *head)
 		{
-			printf("log: dictModelUpdateViewController\n");
+			// printf("log: dictModelUpdateViewController\n");
 			FILE *dictionaryfp;
 			if ((dictionaryfp = fopen(DictName, "wb")) == NULL)
 			{
@@ -545,7 +558,7 @@
 			selectionSort(aDictionary, N);
 			for (int i = 0; i < N; ++i)
 			{
-				printf("log: dictModelUpdateViewController: fwrite\n");
+				// printf("log: dictModelUpdateViewController: fwrite\n");
 				if (fwrite(&aDictionary[i], DICT_LEN, 1, dictionaryfp) != 1)
 				{
 					printf("dictionary write error\n");
@@ -566,7 +579,7 @@
 
 		void selectionSort(DICT *aDict, unsigned short n)
 		{
-			printf("log: selectionSort()\n");
+			// printf("log: selectionSort()\n");
 			int min;
 			for (int i = 0; i < n - 1; ++i)
 			{
