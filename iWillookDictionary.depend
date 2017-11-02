@@ -1,6 +1,0 @@
-# depslib dependency file v1.0
-1509465681 source:c:\users\administrator\documents\developer\iwillookdictionary\main.c
-	<stdio.h>
-	<stdlib.h>
-	<string.h>
-
