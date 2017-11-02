@@ -533,7 +533,7 @@ void dictModelUpdateViewController(DICT_LL *head)
 		dictPtr = dictPtr->next;
 		++i;
 	}
-	// selectionSort(aDictionary, N);
+	selectionSort(aDictionary, N);
 	for (int i = 0; i < N; ++i)
 	{
 		// printf("log: dictModelUpdateViewController: fwrite\n");
